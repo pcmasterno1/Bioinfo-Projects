@@ -1,0 +1,41 @@
+
+# This script will convert the input DNA Sequence (Coding Strand) into 1)the complimentary strand, 2) Corresponding mRNA sequence and 3) The Amino Acid Equivalent
+# One more thing: It won't stop at the STOP CODONS (UAA,UGA,UAG).
+
+DNA = str(input("Please enter your coding dna sequence: \n"))
+DNA_Up = DNA.upper()
+print(DNA_Up)
+c_dna = DNA_Up[::-1] #Reversing the sequence)
+print("The complimentrary DNA is " + c_dna)
+mrna_1 = DNA_Up.maketrans ("ATGC", "AUGC") #Creating the mRNA
+print("The mRNA sequence is ", DNA_Up.translate(mrna_1))
+mrna = DNA_Up.translate(mrna_1)
+
+codons = {
+    "GCU": "A", "GCC": "A", "GCA": "A", "GCG": "A",
+    "UGU": "C", "UGC": "C",
+    "GAU": "D", "GAC": "D",
+    "GAA": "E", "GAG": "E",
+    "UUU": "F", "UUC": "F",
+    "GGU": "G", "GGC": "G", "GGA": "G", "GGG": "G",
+    "CAU": "H", "CAC": "H",
+    "AUA": "I", "AUU": "I", "AUC": "I",
+    "AAA": "K", "AAG": "K",
+    "UUA": "L", "UUG": "L", "CUU": "L", "CUC": "L", "CUA": "L", "CUG": "L",
+    "AUG": "M",
+    "AAU": "N", "AAC": "N",
+    "CCU": "P", "CCC": "P", "CCA": "P", "CCG": "P",
+    "CAA": "Q", "CAG": "Q",
+    "CGU": "R", "CGC": "R", "CGA": "R", "CGG": "R", "AGA": "R", "AGG": "R",
+    "UCU": "S", "UCC": "S", "UCA": "S", "UCG": "S", "AGU": "S", "AGC": "S",
+    "ACU": "T", "ACC": "T", "ACA": "T", "ACG": "T",
+    "GUU": "V", "GUC": "V", "GUA": "V", "GUG": "V",
+    "UGG": "W",
+    "UAU": "Y", "UAC": "Y",
+    "UAA": "*", "UAG": "*", "UGA": "*"
+}
+amino_acid = "" #empty
+for i in range(0, len(mrna), 3):
+    triplets = mrna[i: i + 3]
+    amino_acid += codons[triplets]
+print("The Amino Acid sequence for ", DNA_Up ," is ", amino_acid)
